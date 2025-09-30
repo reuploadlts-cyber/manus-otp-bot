@@ -28,7 +28,7 @@ jobs:
       run: |
         playwright install --with-deps chromium || echo "Playwright installation failed, continuing with tests"
     
-    - name: Run tests
+    - name: Run tests (optional)
       run: |
         pytest tests/ --cov=src --cov-report=xml -v
     
@@ -80,3 +80,4 @@ jobs:
     - name: Test Docker image
       run: |
         docker run --rm otp-forwarder-bot:latest python -c "import src; print('Import successful')" || echo "Docker test failed, continuing"
+
