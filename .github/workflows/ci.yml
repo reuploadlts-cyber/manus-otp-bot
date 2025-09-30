@@ -26,7 +26,7 @@ jobs:
     
     - name: Install Playwright
       run: |
-        playwright install --with-deps chromium
+        run: playwright install chromium
     
     - name: Run tests
       run: |
@@ -79,3 +79,4 @@ jobs:
     - name: Test Docker image
       run: |
         docker run --rm otp-forwarder-bot:latest python -c "import src; print('Import successful')"
+
