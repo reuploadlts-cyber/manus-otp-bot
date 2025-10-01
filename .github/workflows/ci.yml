@@ -28,15 +28,17 @@ jobs:
       run: |
         playwright install --with-deps chromium || echo "Playwright installation failed, continuing with tests"
     
-    - name: Run tests (optional)
+    - name: Run tests
+      env:
+        TELEGRAM_TOKEN: "test_token"
+        ADMIN_IDS: "123456789"
+        IVASMS_EMAIL: "test@example.com"
+        IVASMS_PASSWORD: "test_password"
+        POLL_INTERVAL: "8"
+        HEADLESS: "true"
+        LOG_LEVEL: "INFO"
       run: |
-        pytest tests/ --cov=src --cov-report=xml -v || echo "pytest tests/ --cov=src --cov-report=xml -v failed, continuing with tests"
-    
-    - name: Upload coverage
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage.xml
-      continue-on-error: true
+        pytest tests/ --cov=src --cov-report=xml -v --tb=short --timeout=60
 
   lint:
     runs-on: ubuntu-latest
@@ -80,5 +82,3 @@ jobs:
     - name: Test Docker image
       run: |
         docker run --rm otp-forwarder-bot:latest python -c "import src; print('Import successful')" || echo "Docker test failed, continuing"
-
-
